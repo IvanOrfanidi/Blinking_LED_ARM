@@ -1,0 +1,6 @@
+[submodule "arm-cmake-toolchains"]
+	path = arm-cmake-toolchains
+	url = http://192.168.109.15/root/arm-cmake-toolchains.git
+[submodule "GCC_Linker_Files"]
+	path = GCC_Linker_Files
+	url = http://192.168.109.15/root/GCC_Linker_Files.git

@@ -1,0 +1,11 @@
+image: gcc
+before_script:
+ - apt-get update --yes
+ - apt-get install --yes gcc-arm-none-eabi
+ - apt-get install --yes cmake
+
+build:
+  script:
+  - git submodule init
+  - git submodule update
+  - ./compile.sh
