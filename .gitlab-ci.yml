@@ -3,3 +3,10 @@ build:
   - git submodule init
   - git submodule update
   - ./compile.sh
+  after_script:
+  - cd /media/storage/gitlab/
+  - sudo rm -rf Blinking_LED_ARM
+  - git clone http://192.168.109.15/root/Blinking_LED_ARM.git
+  - cd Blinking_LED_ARM
+  - git submodule init
+  - git submodule update
