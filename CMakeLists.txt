@@ -1,5 +1,5 @@
 # Version CMake
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.13)
 
 # Project name
 project(blinking_led C CXX ASM)
@@ -21,13 +21,15 @@ set(LINKER_FILE "${CMAKE_CURRENT_LIST_DIR}/GCC_Linker_Files/ST/STM32F103XC_FLASH
 # Source files
 file(GLOB_RECURSE SOURCES
   src/*.cpp
-  src/Startup/startup_stm32f103rctx.s
-  src/System/*.c
-  src/System/*.h
-  src/STM32F10x_Drivers_Lib/CMSIS/Include/*.h
-  src/STM32F10x_Drivers_Lib/src/*.cpp
-  src/STM32F10x_Drivers_Lib/inc/*.h
-  src/STM32F10x_Drivers_Lib/inc/utils/*.h)
+  System/Startup/startup_stm32f103rctx.s
+  System/system_stm32f1xx.c
+  System/system_stm32f1xx.h
+)
+
+# Subdirectorys
+add_subdirectory(STM32F10x_Drivers_Lib)
+# Need to access files by < >
+target_include_directories(STM32F10x_Drivers_Lib INTERFACE ${CMAKE_CURRENT_LIST_DIR})
 
 # Compiler flags
 set(CMAKE_C_FLAGS_INIT "${CMAKE_C_FLAGS_INIT} -fstack-usage")
@@ -49,8 +51,10 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS " -Wl,--gc-sections")
 # Compiling target
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-# Link target
-target_link_libraries(${PROJECT_NAME})
+# Targets
+target_link_libraries(${PROJECT_NAME} PRIVATE
+  STM32F10x_Drivers_Lib
+)
 
 # Include utils for generate output files
 include(${CMAKE_CURRENT_SOURCE_DIR}/arm-cmake-toolchains/utils.cmake)

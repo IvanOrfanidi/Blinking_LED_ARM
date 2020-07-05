@@ -56,7 +56,7 @@
   * @{
   */
 
-#include "../STM32F10x_Drivers_Lib/CMSIS/Include/stm32f10x.h"
+#include <STM32F10x_Drivers_Lib/CMSIS/Include/stm32f10x.h>
 
 /**
   * @}
