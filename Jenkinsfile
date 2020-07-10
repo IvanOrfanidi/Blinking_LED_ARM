@@ -1,5 +1,3 @@
-// Имя выходного файла
-def EXECUTABLE_FILE_NAME = "blinking_led"
 
 pipeline {
     agent any
@@ -37,8 +35,8 @@ pipeline {
 
         stage('artifacts') {
             steps {
-                archiveArtifacts artifacts: "build/${EXECUTABLE_FILE_NAME}.hex", onlyIfSuccessful: true
-                archiveArtifacts artifacts: "build/${EXECUTABLE_FILE_NAME}.bin", onlyIfSuccessful: true
+                archiveArtifacts artifacts: "build/*.hex", onlyIfSuccessful: true
+                archiveArtifacts artifacts: "build/*.bin", onlyIfSuccessful: true
             }
         }
 

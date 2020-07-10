@@ -3,6 +3,7 @@
 #include <STM32F10x_Drivers_Lib/inc/rtc.h>
 #include <STM32F10x_Drivers_Lib/inc/watchdog.h>
 #include <STM32F10x_Drivers_Lib/inc/uart.h>
+#include <project_version.h>
 
 int main()
 {

@@ -1,12 +1,12 @@
 *.*
 out/*
-build/*
 !*.cmake
 !*.c
 !*.cpp
 !*.h
 !*.hpp
 !*.s
+!*.in
 !*.ld
 !*.txt
 !*.cfg
@@ -16,5 +16,4 @@ build/*
 !.clang-format
 !*.md
 !*.yml
-build/*.txt
-build/*.cmake
+build/*

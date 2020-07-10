@@ -27,6 +27,38 @@ cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=./arm-cmake-toolchains/arm-gcc-
 cmake --build .
 ```
 
+### Программирование с OpenOCD
+##### Программирование с использованием команды.
+```sh
+openocd -f STM32F103RC.cfg -c "program name_file.hex verify reset exit"
+```
+* `STM32F103RC.cfg` - файл конфигурации утилиты OpenOCD
+* `name_file.hex` - файл прошивки в формате intel hex
+
+##### Программирование с использованием скрипта `program.sh`.
+Старт скрипта `./program.sh STM32F103RC.cfg name_file.hex`
+
+##### program.sh
+```sh
+#!/bin/bash
+
+CFG_FILE=""
+HEX_FILE=""
+
+if [ -n "$1" ]
+    then
+        CFG_FILE=$1
+fi
+
+if [ -n "$2" ]
+    then
+        HEX_FILE=$2
+fi
+
+openocd -f ${CFG_FILE} -c "program build/${HEX_FILE} verify reset exit"
+```
+
+
 ### Настройка Visual Studio Code
 ##### Настройка для сборки проекта.
 * В папке настройки среды `.vscode` создать файл `cmake-kits.json`, прописать в нем путь к тулчейнфайлу:

@@ -2,8 +2,17 @@
 cmake_minimum_required(VERSION 3.13)
 
 # Project name
-project(blinking_led C CXX ASM)
+project(blinking_led
+  VERSION 1.0.0
+  LANGUAGES C CXX ASM
+)
 
+# Configure files
+configure_file(
+  project_version.h.in ${CMAKE_CURRENT_BINARY_DIR}/project_version.h
+)
+
+# Suffix
 set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 
 # Add CMake scripts (includes) into scope
@@ -31,6 +40,7 @@ add_subdirectory(STM32F10x_Drivers_Lib)
 # Need to access files by < >
 target_include_directories(STM32F10x_Drivers_Lib INTERFACE ${CMAKE_CURRENT_LIST_DIR})
 
+
 # Compiler flags
 set(CMAKE_C_FLAGS_INIT "${CMAKE_C_FLAGS_INIT} -fstack-usage")
 set(CMAKE_CXX_FLAGS_INIT "${CMAKE_CXX_FLAGS_INIT} -fstack-usage")
@@ -49,17 +59,22 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS " ${CPU_FLAGS} -Wl,-T ${LINKER_FILE}")
 string(APPEND CMAKE_EXE_LINKER_FLAGS " -Wl,--gc-sections")
 
 # Compiling target
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME}_${CMAKE_PROJECT_VERSION} ${SOURCES})
 
 # Targets
-target_link_libraries(${PROJECT_NAME} PRIVATE
+target_link_libraries(${PROJECT_NAME}_${CMAKE_PROJECT_VERSION} PRIVATE
   STM32F10x_Drivers_Lib
+)
+
+target_include_directories(${PROJECT_NAME}_${CMAKE_PROJECT_VERSION} PRIVATE 
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # Include utils for generate output files
 include(${CMAKE_CURRENT_SOURCE_DIR}/arm-cmake-toolchains/utils.cmake)
 
 # Output files
-firmware_size(${PROJECT_NAME})
-generate_object(${PROJECT_NAME} .bin binary)
-generate_object(${PROJECT_NAME} .hex ihex)
+firmware_size(${PROJECT_NAME}_${CMAKE_PROJECT_VERSION})
+generate_object(${PROJECT_NAME}_${CMAKE_PROJECT_VERSION} .bin binary)
+generate_object(${PROJECT_NAME}_${CMAKE_PROJECT_VERSION} .hex ihex)
