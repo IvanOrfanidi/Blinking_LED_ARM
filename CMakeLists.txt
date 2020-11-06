@@ -18,9 +18,8 @@ set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 # Add CMake scripts (includes) into scope
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/arm-cmake-toolchains")
 
-# Set standart and optimization level
+# Option
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
 
 # Settings device
 set(CORTEX "m3")
@@ -40,7 +39,6 @@ add_subdirectory(STM32F10x_Drivers_Lib)
 # Need to access files by < >
 target_include_directories(STM32F10x_Drivers_Lib INTERFACE ${CMAKE_CURRENT_LIST_DIR})
 
-
 # Compiler flags
 set(CMAKE_C_FLAGS_INIT "${CMAKE_C_FLAGS_INIT} -fstack-usage")
 set(CMAKE_CXX_FLAGS_INIT "${CMAKE_CXX_FLAGS_INIT} -fstack-usage")
@@ -57,6 +55,11 @@ if(NOT has_specs)
 endif()
 string(APPEND CMAKE_EXE_LINKER_FLAGS " ${CPU_FLAGS} -Wl,-T ${LINKER_FILE}")
 string(APPEND CMAKE_EXE_LINKER_FLAGS " -Wl,--gc-sections")
+
+# Set build type
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif(NOT CMAKE_BUILD_TYPE)
 
 # Compiling target
 add_executable(${PROJECT_NAME}_${CMAKE_PROJECT_VERSION} ${SOURCES})
