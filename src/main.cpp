@@ -3,17 +3,21 @@
 #include <STM32F10x_Drivers_Lib/inc/rtc.h>
 #include <STM32F10x_Drivers_Lib/inc/watchdog.h>
 #include <STM32F10x_Drivers_Lib/inc/uart.h>
+#include <STM32F10x_Drivers_Lib/inc/utils/clock_setup.h>
 #include <project_version.h>
 
 int main()
 {
-	constexpr stm32f10x_driver_lib::Gpio::Config OUTPUT{
-	    stm32f10x_driver_lib::Gpio::Mode::OUTPUT_PUSH_PULL,
-	    stm32f10x_driver_lib::Gpio::Speed::_2mhz};
-	stm32f10x_driver_lib::Gpio run(GPIOB, 12, OUTPUT);
+	auto& clock = stm32f10x_driver_lib::ClockSetup::getInstance();
+	clock.inHse8MHzOut72MHz();
 
 	auto& systick = stm32f10x_driver_lib::Systick::getInstance();
 	systick.init(72'000'000, 1000); // Configure 1 tick - 1 msec
+
+	constexpr stm32f10x_driver_lib::Gpio::Config OUTPUT{
+	    stm32f10x_driver_lib::Gpio::Mode::OUTPUT_PUSH_PULL,
+	    stm32f10x_driver_lib::Gpio::Speed::_2mhz};
+	stm32f10x_driver_lib::Gpio run(GPIOC, 13, OUTPUT);
 
 	auto& rtc = stm32f10x_driver_lib::Rtc::getInstance();
 

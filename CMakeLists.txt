@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 
 # Project name
 project(blinking_led
-    VERSION 1.0.0
+    VERSION 1.0.1
     LANGUAGES C CXX ASM
 )
 
@@ -23,13 +23,13 @@ set(CMAKE_CXX_STANDARD 17)
 
 # Settings device
 set(CORTEX "m3")
-set(FAMILY "STM32F10X_HD")
-set(LINKER_FILE "${CMAKE_CURRENT_LIST_DIR}/GCC_Linker_Files/ST/STM32F103XC_FLASH.ld")
+set(FAMILY "STM32F10X_MD")
+set(LINKER_FILE "${CMAKE_CURRENT_LIST_DIR}/GCC_Linker_Files/ST/STM32F103X8_FLASH.ld")
 
 # Source files
 file(GLOB_RECURSE SOURCES
     src/*.cpp
-    System/Startup/startup_stm32f103rctx.s
+    System/Startup/startup_stm32f103c8tx.s
     System/system_stm32f1xx.c
     System/system_stm32f1xx.h
 )
