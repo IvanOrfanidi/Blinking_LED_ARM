@@ -17,13 +17,14 @@ int main()
 	constexpr stm32f10x_driver_lib::Gpio::Config OUTPUT{
 	    stm32f10x_driver_lib::Gpio::Mode::OUTPUT_PUSH_PULL,
 	    stm32f10x_driver_lib::Gpio::Speed::_2mhz};
-	stm32f10x_driver_lib::Gpio run(GPIOC, 13, OUTPUT);
+	stm32f10x_driver_lib::Gpio run(GPIOA, 1, OUTPUT);
+	run.reset();
 
 	auto& rtc = stm32f10x_driver_lib::Rtc::getInstance();
 
-	auto& iwdg = stm32f10x_driver_lib::Watchdog::getInstance();
-	iwdg.init(1000);
-	iwdg.start();
+	// auto& iwdg = stm32f10x_driver_lib::Watchdog::getInstance();
+	// iwdg.init(2000);
+	// iwdg.start();
 
 	// Config for USART
 	const stm32f10x_driver_lib::Uart::Config config = {
@@ -42,15 +43,8 @@ int main()
 
 	while(true) {
 		run.reset();
-		for(uint32_t i = 0; i < 100000; ++i) {
-			__NOP();
-		}
-
-		iwdg.reload();
-
+		systick.delay(1000);
 		run.set();
-		for(uint32_t i = 0; i < 100000; ++i) {
-			__NOP();
-		}
+		systick.delay(1000);
 	}
 }

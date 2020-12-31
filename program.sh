@@ -13,4 +13,4 @@ if [ -n "$2" ]
         HEX_FILE=$2
 fi
 
-openocd -f ${CFG_FILE} -c "program build/${HEX_FILE} verify reset exit"
+openocd -f ${CFG_FILE} -c "program ${HEX_FILE} verify reset exit"
