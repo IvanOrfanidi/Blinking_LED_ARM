@@ -8,26 +8,25 @@
 
 int main()
 {
-	auto& clock = stm32f10x_driver_lib::ClockSetup::getInstance();
-	clock.inHse8MHzOut72MHz();
+	stm32f10x_driver_lib::ClockSetup::getInstance().inHse8MHzOut72MHz();
 
 	auto& systick = stm32f10x_driver_lib::Systick::getInstance();
 	systick.init(72'000'000, 1000); // Configure 1 tick - 1 msec
 
-	constexpr stm32f10x_driver_lib::Gpio::Config OUTPUT{
-	    stm32f10x_driver_lib::Gpio::Mode::OUTPUT_PUSH_PULL,
-	    stm32f10x_driver_lib::Gpio::Speed::_2mhz};
-	stm32f10x_driver_lib::Gpio run(GPIOA, 1, OUTPUT);
+	stm32f10x_driver_lib::Gpio run(
+	    GPIOA,
+	    1,
+	    {stm32f10x_driver_lib::Gpio::Mode::OUTPUT_PUSH_PULL,
+	     stm32f10x_driver_lib::Gpio::Speed::_2mhz});
 	run.reset();
-
-	auto& rtc = stm32f10x_driver_lib::Rtc::getInstance();
 
 	// auto& iwdg = stm32f10x_driver_lib::Watchdog::getInstance();
 	// iwdg.init(2000);
 	// iwdg.start();
 
+	auto* uart1 = stm32f10x_driver_lib::Uart::getInstance(USART1);
 	// Config for USART
-	const stm32f10x_driver_lib::Uart::Config config = {
+	uart1->init({
 	    stm32f10x_driver_lib::Uart::WordLength::_8B,
 	    stm32f10x_driver_lib::Uart::StopBits::_1B,
 	    stm32f10x_driver_lib::Uart::Parity::NO,
@@ -35,10 +34,7 @@ int main()
 	    stm32f10x_driver_lib::Uart::Mode::TX_RX,
 	    115'200,
 	    72'000'000,
-	};
-
-	auto* uart1 = stm32f10x_driver_lib::Uart::getInstance(USART1);
-	uart1->init(config);
+	});
 	uart1->createInterrupt();
 
 	while(true) {
