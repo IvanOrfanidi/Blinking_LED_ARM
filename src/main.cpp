@@ -8,7 +8,7 @@
 
 int main()
 {
-	stm32f10x_driver_lib::ClockSetup::getInstance().inHse8MHzOut72MHz();
+	stm32f10x_driver_lib::ClockSetup::getInstance().setInHse8MHzOut72MHz();
 
 	auto& systick = stm32f10x_driver_lib::Systick::getInstance();
 	systick.init(72'000'000, 1000); // Configure 1 tick - 1 msec

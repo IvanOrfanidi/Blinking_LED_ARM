@@ -1,9 +1,9 @@
 [submodule "arm-cmake-toolchains"]
 	path = arm-cmake-toolchains
-	url = http://192.168.109.15/root/arm-cmake-toolchains.git
+	url = http://git.home.lan/root/arm-cmake-toolchains.git
 [submodule "GCC_Linker_Files"]
 	path = GCC_Linker_Files
-	url = http://192.168.109.15/root/GCC_Linker_Files.git
+	url = http://git.home.lan/root/GCC_Linker_Files.git
 [submodule "STM32F10x_Drivers_Lib"]
 	path = STM32F10x_Drivers_Lib
-	url = http://192.168.109.15/root/STM32F10x_Drivers_Lib.git
+	url = http://git.home.lan/root/STM32F10x_Drivers_Lib.git
