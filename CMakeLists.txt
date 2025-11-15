@@ -35,9 +35,10 @@ file(GLOB_RECURSE SOURCES
 )
 
 # Subdirectorys
-add_subdirectory(STM32F10x_Drivers_Lib)
+add_subdirectory(stm32f10x_drivers_lib)
+
 # Need to access files by < >
-target_include_directories(STM32F10x_Drivers_Lib INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(stm32f10x_drivers_lib INTERFACE ${CMAKE_CURRENT_LIST_DIR})
 
 # Compiler flags
 set(CMAKE_C_FLAGS_INIT "${CMAKE_C_FLAGS_INIT} -fstack-usage")
@@ -50,9 +51,11 @@ add_definitions(${CPU_FLAGS} ${COMPILER_FLAGS})
 
 # Link options
 string(REGEX MATCH ".*\.specs.*" has_specs "${CMAKE_EXE_LINKER_FLAGS}")
+
 if(NOT has_specs)
     string(APPEND CMAKE_EXE_LINKER_FLAGS " --specs=nosys.specs")
 endif()
+
 string(APPEND CMAKE_EXE_LINKER_FLAGS " ${CPU_FLAGS} -Wl,-T ${LINKER_FILE}")
 string(APPEND CMAKE_EXE_LINKER_FLAGS " -Wl,--gc-sections")
 
@@ -66,10 +69,10 @@ add_executable(${PROJECT_NAME}_${CMAKE_PROJECT_VERSION} ${SOURCES})
 
 # Targets
 target_link_libraries(${PROJECT_NAME}_${CMAKE_PROJECT_VERSION} PRIVATE
-    STM32F10x_Drivers_Lib
+    stm32f10x_drivers_lib
 )
 
-target_include_directories(${PROJECT_NAME}_${CMAKE_PROJECT_VERSION} PRIVATE 
+target_include_directories(${PROJECT_NAME}_${CMAKE_PROJECT_VERSION} PRIVATE
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
 )

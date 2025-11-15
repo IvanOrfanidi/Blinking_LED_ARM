@@ -4,6 +4,6 @@
 [submodule "GCC_Linker_Files"]
 	path = GCC_Linker_Files
 	url = http://git.home.lan/root/GCC_Linker_Files.git
-[submodule "STM32F10x_Drivers_Lib"]
-	path = STM32F10x_Drivers_Lib
-	url = http://git.home.lan/root/STM32F10x_Drivers_Lib.git
+[submodule "stm32f10x_drivers_lib"]
+	path = stm32f10x_drivers_lib
+	url = http://git.home.lan/root/stm32f10x_drivers_lib.git
